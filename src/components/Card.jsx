@@ -45,7 +45,7 @@ const VideoCart = ({thumb, title, descr, link}) => {
     onClose={handleClose}
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
-    maxWidth='100%'
+    maxWidth={false}
   >
     <DialogContent>
       {getPopUpContent(link)}

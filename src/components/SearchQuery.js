@@ -5,7 +5,6 @@ const getSearchResults = async (value) => {
   const URL = `${initUrl}&key=${key}&type=video&part=snippet&pageToken=${pageToken}&maxResults=${10}&q=${value}`;
   const response = await fetch(URL);
   const data = await response.json();
-  console.log(URL);
   return data;
 }
 

@@ -16,14 +16,13 @@ const Results = ({ data }) => {
   const classes = useStyles();
   console.log(data);
   if (!data.map) return null
-  const showNavigationButtons = () => {
-    console.log('rap')
-  }
-  const hideNavigationButtons = () => {
-    console.log('r')
-  }
+  // const showNavigationButtons = () => {
+  // }
+  // const hideNavigationButtons = () => {
+  // }
+  // onMouseEnter={showNavigationButtons} onMouseLeave={hideNavigationButtons}
   return (
-    <div className={classes.results} onMouseEnter={showNavigationButtons} onMouseLeave={hideNavigationButtons}>
+    <div className={classes.results} >
     {data.map((el) => {
     const { title } = el.snippet;
     const descr = el.snippet.description;
