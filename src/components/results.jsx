@@ -3,7 +3,7 @@ import uniquid from 'uniquid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import VideoCart from './Card';
-import e from './events';
+import mwheelEvent from './events';
 // import NavArrows from './Arrows';
 
 const useStyles = makeStyles({
@@ -23,7 +23,7 @@ const Results = ({ data }) => {
   // }
   // onMouseEnter={showNavigationButtons} onMouseLeave={hideNavigationButtons}
 
-  e(classes.results);
+  mwheelEvent(classes.results);
 
   return (
     <div className={classes.results} >
