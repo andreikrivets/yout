@@ -12,22 +12,27 @@ import getPopUpContent from './popUpContent';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: '23.5%',
-    maxWidth: '23.5%',
-    marginLeft: '2%',
+    minWidth: "23.5%",
+    maxWidth: "23.5%",
+    marginLeft: "2%",
     marginBottom: 20,
     '&:first-of-type': {
       marginLeft: 0,
     }
   },
+  cardContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    width: "100%"
+  },
   media: {
-    height: '15vw',
+    height: "15vw",
   },
 });
 
 const VideoCart = ({thumb, title, descr, link}) => {
   const classes = useStyles();
-
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -52,8 +57,9 @@ const VideoCart = ({thumb, title, descr, link}) => {
     </DialogContent>
   </Dialog>
     <Card className={classes.card}>
-      <CardActionArea onClick={handleClickOpen}>
+      <CardActionArea className={classes.cardContent} onClick={handleClickOpen}>
         <CardMedia
+          component="img"
           className={classes.media}
           image={thumb}
           title={title}

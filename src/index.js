@@ -3,6 +3,5 @@ import AppW from './App';
 
 ReactDOM.render(
   AppW(),
-  document.getElementById('root')
-  );
+  document.getElementById('root'));
 
