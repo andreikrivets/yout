@@ -26,14 +26,18 @@ const smoothScroll = (results, delta) => {
 
 const Results = ({data, onScrollEnd}) => {
   const classes = useStyles();
+  let results = document.querySelector(`.${classes.results}`);
   const handleScroll = (e) => {
-    const results = document.querySelector(`.${classes.results}`);
-    const prevLeftOffset = results.scrollLeft;
-    smoothScroll(results, e.deltaY * 2);
-    const currentLeftOffset = results.scrollLeft;
-    console.log(currentLeftOffset, prevLeftOffset)
+    results = document.querySelector(`.${classes.results}`);
+    const childWidth = results.childNodes[0].clientWidth;
+    const offset = (Math.sign(e.deltaY) * childWidth);
+    smoothScroll(results, offset);
+    if (results.scrollLeft * 0.655 >= results.offsetWidth) {
+     onScrollEnd()
+    }
   };
     if (Object.keys(data).length === 0) return null
+    if (results) results.scrollBy(0, 0);
     return (
       <div className={classes.results} onWheel={handleScroll} key={uniquid()}>
       {data.map((el) => {

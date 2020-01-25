@@ -18,6 +18,8 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
+  const body = document.body;
+  body.classList.add(classes.body);
   const [data, setData] = useState({});
   const [query, setQuery] = useState('');
   const [token, setToken] = useState('');
