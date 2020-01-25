@@ -24,7 +24,8 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    width: "100%"
+    width: "100%",
+    height: "100%"
   },
   media: {
     height: "15vw",
