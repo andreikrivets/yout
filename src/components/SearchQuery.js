@@ -1,5 +1,4 @@
 const getSearchResults = async (value, nextPageToken) => {
-  console.log(nextPageToken);
   const pageToken = nextPageToken || '';
   const key = "AIzaSyAqBJ_PPYvXrq7TAJOk_P4IuP9wHPNEtLU";
   const initUrl = 'https://www.googleapis.com/youtube/v3/search?';
