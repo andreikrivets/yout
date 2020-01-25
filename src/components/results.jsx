@@ -1,11 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import uniquid from 'uniquid';
 
 import VideoCart from './Card';
 
 const useStyles = makeStyles({
+  loadingWrapper: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+    marginTop: "10vw"
+  },
   results: {
     display: "flex",
     overflowX: "hidden",
@@ -24,7 +31,7 @@ const smoothScroll = (results, delta) => {
   }, 25);
 }
 
-const Results = ({data, onScrollEnd}) => {
+const Results = ({data, onScrollEnd, isLoading}) => {
   const classes = useStyles();
   let results = document.querySelector(`.${classes.results}`);
   const handleScroll = (e) => {
@@ -33,11 +40,16 @@ const Results = ({data, onScrollEnd}) => {
     const offset = (Math.sign(e.deltaY) * childWidth);
     smoothScroll(results, offset);
     if (results.scrollLeft * 0.655 >= results.offsetWidth) {
-     onScrollEnd()
+      results.scrollTo(0, 0);
+      onScrollEnd()
     }
   };
-    if (Object.keys(data).length === 0) return null
-    if (results) results.scrollBy(0, 0);
+    if (isLoading) return (
+      <div className={classes.loadingWrapper}>
+        <CircularProgress />
+      </div>
+    )
+    if (Object.keys(data).length === 0) return null;
     return (
       <div className={classes.results} onWheel={handleScroll} key={uniquid()}>
       {data.map((el) => {

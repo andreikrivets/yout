@@ -23,30 +23,37 @@ const App = () => {
   const [data, setData] = useState({});
   const [query, setQuery] = useState('');
   const [token, setToken] = useState('');
+  const [loadingProcessState, setLoadingProcessState] = useState(false);
   const getData = (searchQuery) => {
-    getSearchResults(searchQuery).then(
-      result => {
-        setData(result.items);
-        setToken(result.nextPageToken);
-        setQuery(searchQuery);
-      }
-    );
+    setLoadingProcessState(true);
+    getSearchResults(searchQuery)
+      .then(
+        result => {
+          setData(result.items);
+          setToken(result.nextPageToken);
+          setQuery(searchQuery);
+        }
+      )
+      .then(() => setLoadingProcessState(false))
   };
 
   const getNextPage = () => {
-    getSearchResults(query, token).then(
-      result => {
-        setData({});
-        setData(result.items);
-        setToken(result.nextPageToken)
-      }
-    );
+    setLoadingProcessState(true);
+    getSearchResults(query, token)
+      .then(
+        result => {
+          setData({});
+          setData(result.items);
+          setToken(result.nextPageToken)
+        }
+      )
+      .then(() => setLoadingProcessState(false))
   }
 
   return (
     <>
       <SearchArea onChange={getData}/>
-      <Results data={data} className={classes.results} onScrollEnd={getNextPage} />
+      <Results data={data} className={classes.results} onScrollEnd={getNextPage} isLoading={loadingProcessState} />
     </>
   );
 }
