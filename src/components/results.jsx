@@ -17,7 +17,6 @@ const useStyles = makeStyles({
     display: "flex",
     overflowX: "hidden",
     marginTop: "2vh",
-    transition: "left 5s cubic-bezier(0, 0, 1, 1)",
   },
 });
 
@@ -25,10 +24,10 @@ const smoothScroll = (results, delta) => {
   let offset = 0;
   let step = delta / 10;
   const timer = setInterval(() => {
+    if (Math.abs(offset) >= Math.abs(delta)) clearInterval(timer);
     offset = offset + step;
     results.scrollBy(step, 0);
-    if (Math.abs(offset) >= Math.abs(delta)) clearInterval(timer);
-  }, 25);
+  }, 10);
 }
 
 const Results = ({data, onScrollEnd, isLoading}) => {
@@ -36,10 +35,12 @@ const Results = ({data, onScrollEnd, isLoading}) => {
   let results = document.querySelector(`.${classes.results}`);
   const handleScroll = (e) => {
     results = document.querySelector(`.${classes.results}`);
-    const childWidth = results.childNodes[0].clientWidth;
-    const offset = (Math.sign(e.deltaY) * childWidth);
+    const childWidthTxt = getComputedStyle(results.childNodes[0]).width;
+    const childWidth = +childWidthTxt.slice(0, childWidthTxt.length - 2);
+    const offset = (Math.sign(e.deltaY) * (childWidth));
+    console.log(childWidth);
     smoothScroll(results, offset);
-    if (results.scrollLeft * 0.655 >= results.offsetWidth) {
+    if (results.scrollLeft * 0.155 >= results.offsetWidth) {
       results.scrollTo(0, 0);
       onScrollEnd()
     }
@@ -53,11 +54,13 @@ const Results = ({data, onScrollEnd, isLoading}) => {
     return (
       <div className={classes.results} onWheel={handleScroll} key={uniquid()}>
       {data.map((el) => {
-      const { title } = el.snippet;
-      const descr = el.snippet.description;
-      const thumb = el.snippet.thumbnails.medium.url;
-      const link = el.id.videoId;
-      return <VideoCart key={uniquid()} title={title} descr={descr} thumb={thumb} link={link}/>
+        const information = {
+          title: el.snippet.title,
+          descr: el.snippet.description,
+          thumb: el.snippet.thumbnails.medium.url,
+          link: el.id.videoId
+        }
+      return <VideoCart key={uniquid()} info={information}/>
     })}
       </div>
     )

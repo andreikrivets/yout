@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const VideoCart = ({thumb, title, descr, link}) => {
+const VideoCart = ({ info }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -54,7 +54,7 @@ const VideoCart = ({thumb, title, descr, link}) => {
     maxWidth={false}
   >
     <DialogContent>
-      {getPopUpContent(link)}
+      {getPopUpContent(info.link)}
     </DialogContent>
   </Dialog>
     <Card className={classes.card}>
@@ -62,15 +62,15 @@ const VideoCart = ({thumb, title, descr, link}) => {
         <CardMedia
           component="img"
           className={classes.media}
-          image={thumb}
-          title={title}
+          image={info.thumb}
+          title={info.title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {title}
+            {info.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {descr}
+            {info.descr}
           </Typography>
         </CardContent>
       </CardActionArea>
