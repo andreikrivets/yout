@@ -1,6 +1,7 @@
 {
   "name": "youtube-cli",
   "version": "0.1.0",
+  "homepage": "http://andreikrivets.github.io/yout",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.3.2",
@@ -21,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +45,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
     "eslint-plugin-react": "^7.14.3",
+    "gh-pages": "^2.2.0",
     "react-promise": "^3.0.2"
   }
 }

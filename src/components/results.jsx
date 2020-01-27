@@ -53,7 +53,6 @@ const Results = ({data, onScrollEnd, isLoading}) => {
   const handleScroll = (e) => {
     const results = document.querySelector(`.${classes.results}`);
     smoothScroll(classes, getOffset(e.deltaY));
-    console.log(results.scrollLeft * 0.16, results.offsetWidth);
     lineEndCheck(results);
   };
 
