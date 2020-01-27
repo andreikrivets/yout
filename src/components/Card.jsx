@@ -27,6 +27,7 @@ const useStyles = makeStyles({
   },
   media: {
     height: "15vw",
+    pointerEvents: "none"
   },
 });
 
