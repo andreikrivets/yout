@@ -12,13 +12,11 @@ import getPopUpContent from './popUpContent';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: "23.5%",
-    maxWidth: "23.5%",
+    minWidth: "22.5%",
+    maxWidth: "22.5%",
     marginLeft: "2%",
     marginBottom: 20,
-    '&:first-of-type': {
-      marginLeft: 0,
-    }
+    borderRadius: 30
   },
   cardContent: {
     display: "flex",

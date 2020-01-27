@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -15,36 +15,59 @@ const useStyles = makeStyles({
   },
   results: {
     display: "flex",
-    overflowX: "hidden",
     marginTop: "2vh",
+    overflowX: "hidden"
   },
 });
 
-const smoothScroll = (results, delta) => {
+const smoothScroll = (classes, delta) => {
+  const results = document.querySelector(`.${classes.results}`);
   let offset = 0;
-  let step = delta / 10;
+  let step = Math.sign(delta) * 5;
   const timer = setInterval(() => {
-    if (Math.abs(offset) >= Math.abs(delta)) clearInterval(timer);
-    offset = offset + step;
-    results.scrollBy(step, 0);
-  }, 10);
+    if (Math.abs(offset) >= Math.abs(delta)) {
+      results.scrollBy(offset - delta, 0);
+      clearInterval(timer);
+    } else {
+      offset = offset + step;
+      results.scrollBy(step, 0);
+    }
+  }, 1);
 }
 
 const Results = ({data, onScrollEnd, isLoading}) => {
   const classes = useStyles();
-  let results = document.querySelector(`.${classes.results}`);
+
+  const getOffset = (delta) => {
+    const results = document.querySelector(`.${classes.results}`);
+    return Math.sign(delta) * (results.scrollWidth / 30);
+  }
+
   const handleScroll = (e) => {
-    results = document.querySelector(`.${classes.results}`);
-    const childWidthTxt = getComputedStyle(results.childNodes[0]).width;
-    const childWidth = +childWidthTxt.slice(0, childWidthTxt.length - 2);
-    const offset = (Math.sign(e.deltaY) * (childWidth));
-    console.log(childWidth);
-    smoothScroll(results, offset);
+    const results = document.querySelector(`.${classes.results}`);
+    smoothScroll(classes, getOffset(e.deltaY));
     if (results.scrollLeft * 0.155 >= results.offsetWidth) {
       results.scrollTo(0, 0);
-      onScrollEnd()
+      console.log('rap');
+      // onScrollEnd()
     }
   };
+
+  let mouseDownX = 0;
+  let deltaX = 0;
+
+  const handleClickDown = (e) => {
+    const current = Math.floor(e.screenX / 100);
+    mouseDownX = current
+  }
+
+  const handleClickUp = (e) => {
+    const current = Math.floor(e.screenX / 100);
+    deltaX = Math.sign(mouseDownX - current);
+    smoothScroll(classes, getOffset(deltaX) * 2)
+    console.log(deltaX);
+  }
+
     if (isLoading) return (
       <div className={classes.loadingWrapper}>
         <CircularProgress />
@@ -52,7 +75,7 @@ const Results = ({data, onScrollEnd, isLoading}) => {
     )
     if (Object.keys(data).length === 0) return null;
     return (
-      <div className={classes.results} onWheel={handleScroll} key={uniquid()}>
+      <div className={classes.results} onWheel={handleScroll} onMouseDown={handleClickDown} onMouseUp={handleClickUp} key={uniquid()}>
       {data.map((el) => {
         const information = {
           title: el.snippet.title,

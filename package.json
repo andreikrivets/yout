@@ -13,6 +13,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
+    "react-scroll": "^1.7.16",
     "smooth-scrollbar": "^8.5.1",
     "uniquid": "^1.1.4"
   },
