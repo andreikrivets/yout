@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import uniquid from 'uniquid';
 
 import VideoCart from './Card';
@@ -45,7 +44,8 @@ const Results = ({data, onScrollEnd, isLoading}) => {
   }
 
   const lineEndCheck = (results) => {
-    if (results.scrollLeft * 0.16 >= results.offsetWidth) {
+    const child = results.childNodes[results.childNodes.length - 1];
+    if (Math.ceil(child.getBoundingClientRect().x) === results.clientWidth - child.offsetWidth) {
       results.scrollTo(0, 0);
       onScrollEnd();
     }
@@ -61,15 +61,23 @@ const Results = ({data, onScrollEnd, isLoading}) => {
   let deltaX = 0;
 
   const handleMouseDown = (e) => {
-    const current = Math.floor(e.screenX / 100);
+    let offsetX;
+    if (e.changedTouches) {
+      offsetX = e.changedTouches[0].screenX;
+    } else offsetX = e.screenX || 0;
+    const current = Math.floor(offsetX / 100);
     mouseDownX = current
   }
 
   const handleMouseUp = (e) => {
+    let offsetX;
+    if (e.changedTouches) {
+      offsetX = e.changedTouches[0].screenX;
+    } else offsetX = e.screenX || 0;
     const results = document.querySelector(`.${classes.results}`);
-    const current = Math.floor(e.screenX / 100);
+    const current = Math.floor(offsetX / 100);
     deltaX = Math.sign(mouseDownX - current);
-    smoothScroll(classes, getOffset(deltaX) * 4);
+    smoothScroll(classes, getOffset(deltaX));
     lineEndCheck(results);
   }
 
@@ -80,7 +88,15 @@ const Results = ({data, onScrollEnd, isLoading}) => {
     )
     if (Object.keys(data).length === 0) return null;
     return (
-      <div className={classes.results} onWheel={handleScroll} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} key={uniquid()}>
+      <div
+        className={classes.results}
+        onWheel={handleScroll}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleMouseDown}
+        onTouchEnd={handleMouseUp}
+        key={uniquid()}
+      >
       {data.map((el) => {
         const information = {
           title: el.snippet.title,
