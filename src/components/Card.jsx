@@ -10,13 +10,23 @@ import DialogContent from '@material-ui/core/DialogContent';
 
 import getPopUpContent from './popUpContent';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   card: {
-    minWidth: "22.5%",
-    maxWidth: "22.5%",
+    [theme.breakpoints.down('xs')]: {
+      minWidth: "98%",
+      maxWidth: "98%",
+    },
+    [theme.breakpoints.up('sm')]: {
+      minWidth: "47%",
+      maxWidth: "47%",
+    },
+    [theme.breakpoints.up('lg')]: {
+      minWidth: "22.5%",
+      maxWidth: "22.5%",
+    },
     marginLeft: "2%",
     marginBottom: 20,
-    borderRadius: 30
+    borderRadius: "5%"
   },
   cardContent: {
     display: "flex",
@@ -26,10 +36,10 @@ const useStyles = makeStyles({
     height: "100%"
   },
   media: {
-    height: "15vw",
+    height: "50%",
     pointerEvents: "none"
   },
-});
+}));
 
 const VideoCart = ({ info }) => {
   const classes = useStyles();

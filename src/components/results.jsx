@@ -15,6 +15,7 @@ const useStyles = makeStyles({
   },
   results: {
     display: "flex",
+    height: "50%",
     marginTop: "2vh",
     overflowX: "hidden"
   },
